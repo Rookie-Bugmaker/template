@@ -1,0 +1,101 @@
+{
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "files.exclude": {
+      "**/node_modules": true
+    },
+    "search.exclude": {
+      "**/dist": true,
+      "**/yarn.lock": true,
+      "**/package-lock.json": true,
+      "**/*.svg":true
+    },
+    "javascript.format.enable": false,
+    "typescript.format.enable": false,
+    "json.format.enable": false,
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "prettier.requireConfig": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "never"
+    },
+    "files.associations": {
+      ".env*": "ini"
+    },
+    "[jsonc]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[svg]": {
+      "editor.defaultFormatter": "jock.svg"
+    },
+    "[json]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[vue]": {
+      "editor.quickSuggestions": {
+        "strings": true
+      },
+      "editor.codeActionsOnSave": {
+        "source.organizeImports": "never"
+      },
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+    },
+    "volar.completion.preferredTagNameCase": "kebab",
+    "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.inlineSuggest.showToolbar": "always",
+    "cSpell.words": [
+      "analyz",
+      "antv",
+      "ARCHIEVE",
+      "codemirror",
+      "confirmer",
+      "darkreader",
+      "jsencrypt",
+      "jspdf",
+      "lndicator",
+      "maximizable",
+      "nutui",
+      "onhand",
+      "persistedstate",
+      "signale",
+      "snapline",
+      "Templete",
+      "umijs",
+      "unplan",
+      "vueuse",
+      "wordcloud"
+    ],
+    "i18n-ally.localesPaths": [
+      "src/locales",
+      "src/locales/lang",
+      "src/components/setting-drawer/locales",
+      "src/components/system/data-auth-table/locales",
+      "src/components/yl/button/locales",
+      "src/views/low-code/external-api/locales",
+      "src/views/low-code/low-code-api/locales",
+      "src/views/message/template/locales",
+      "src/views/message/channel/locales",
+      "src/views/message/log/locales",
+      "src/views/system/api/locales",
+      "src/views/system/function/locales",
+      "src/views/system/menu/locales",
+      "src/views/system/org/locales",
+      "src/views/system/role/locales",
+      "src/views/system/user/locales",
+      "src/views/system/value-set/locales",
+      "src/views/task/actuator/locales",
+      "src/views/task/define/locales",
+      "src/views/task/dynamic-parameter/locales",
+      "src/views/task/execution/locales",
+      "src/views/low-code/design/components/left/locales"
+    ],
+    "scss.lint.unknownAtRules": "ignore",
+    "scss.lint.unknownProperties": "warning",
+    "vue3snippets.enable-compile-vue-file-on-did-save-code": false,
+}

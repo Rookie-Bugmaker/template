@@ -1,0 +1,16 @@
+export default {
+  'components.yl.button.add.text': 'Add',
+  'components.yl.button.cancel.text': 'Cancel',
+  'components.yl.button.cancel.confirm.title': 'Confirm cancellation?',
+  'components.yl.button.download.text': 'Download',
+  'components.yl.button.edit.text': 'Edit',
+  'components.yl.button.export.text': 'Export',
+  'components.yl.button.import.text': 'Import',
+  'components.yl.button.publish.text': 'Publish',
+  'components.yl.button.remove.batch.text': 'Batch Remove',
+  'components.yl.button.remove.text': 'Remove',
+  'components.yl.button.remove.confirm.title': 'Confirm remove?',
+  'components.yl.button.reset.text': 'Reset',
+  'components.yl.button.save.text': 'OK',
+  'components.yl.button.search.text': 'Search',
+};

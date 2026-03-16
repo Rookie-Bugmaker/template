@@ -1,0 +1,16 @@
+export default {
+  'components.yl.button.add.text': '新增',
+  'components.yl.button.cancel.text': '取消',
+  'components.yl.button.cancel.confirm.title': '确认取消？',
+  'components.yl.button.download.text': '下载',
+  'components.yl.button.edit.text': '编辑',
+  'components.yl.button.export.text': '导出',
+  'components.yl.button.import.text': '导入',
+  'components.yl.button.publish.text': '发布',
+  'components.yl.button.remove.batch.text': '批量删除',
+  'components.yl.button.remove.text': '删除',
+  'components.yl.button.remove.confirm.title': '确认删除？',
+  'components.yl.button.reset.text': '重置',
+  'components.yl.button.save.text': '确定',
+  'components.yl.button.search.text': '查询',
+};
