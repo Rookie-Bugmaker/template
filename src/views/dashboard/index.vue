@@ -74,84 +74,84 @@
 </template>
 
 <script lang="ts">
-// import { defineComponent, ref, onMounted, onActivated, reactive } from 'vue';
-// import useDashboardState from './hooks/useDashboardState';
-// import ChildItem from './components/child-item.vue';
-// import PageComponentsModal from './page-components-modal.vue';
-// import { Affix as AAffix } from 'ant-design-vue';
+import { defineComponent, ref, onMounted, onActivated, reactive } from 'vue';
+import useDashboardState from './hooks/useDashboardState';
+import ChildItem from './components/child-item.vue';
+import PageComponentsModal from './page-components-modal.vue';
+import { Affix as AAffix } from 'ant-design-vue';
 
-// import { useRoute } from 'vue-router';
-// import { getMessageById } from '@/api/dashboard/items/system/notice';
-// import ProcessApprovalModal from '@/components/workflow/process-approval/approval-modal.vue';
-// import { updateMessageStatus } from '@/api/dashboard/items/system/notice';
-// import convertMessage from './items/system/notice/convertMessage';
+import { useRoute } from 'vue-router';
+import { getMessageById } from '@/api/dashboard/items/system/notice';
+import ProcessApprovalModal from '@/components/workflow/process-approval/approval-modal.vue';
+import { updateMessageStatus } from '@/api/dashboard/items/system/notice';
+import convertMessage from './items/system/notice/convertMessage';
 
-// export default defineComponent({
-//   name: 'Dashboard',
-//   setup() {
-//     const { state, changeConfig, saveConfig } = useDashboardState();
+export default defineComponent({
+  name: 'Dashboard',
+  setup() {
+    const { state, changeConfig, saveConfig } = useDashboardState();
 
-//     const getItemProps = (pageComponentId: string) => {
-//       const target = state.pageComponents.find(f => f.componentId === pageComponentId);
-//       return {
-//         title: target?.homePageTitle || '组件',
-//         path: target?.functionUrl,
-//         refreshRate: target?.refreshRate,
-//       };
-//     };
+    const getItemProps = (pageComponentId: string) => {
+      const target = state.pageComponents.find(f => f.componentId === pageComponentId);
+      return {
+        title: target?.homePageTitle || '组件',
+        path: target?.functionUrl,
+        refreshRate: target?.refreshRate,
+      };
+    };
 
-//     const gridLayoutRef = ref(null);
+    const gridLayoutRef = ref(null);
 
-//     const processApprovalState = reactive({
-//       open: false,
-//       processInstanceId: '',
-//       functionId: '',
-//     });
+    const processApprovalState = reactive({
+      open: false,
+      processInstanceId: '',
+      functionId: '',
+    });
 
-//     const route = useRoute();
+    const route = useRoute();
 
-//     const approval = () => {
-//       const logId = route.query?.logId as string;
-//       if (logId) {
-//         getMessageById(logId).then(({ success, result }) => {
-//           if (success && result) {
-//             if (result.type == 1) {
-//               processApprovalState.open = true;
-//               const data = convertMessage(result);
-//               processApprovalState.processInstanceId = data?.extraParams?.processInstanceId;
-//               processApprovalState.functionId = data?.extraParams?.functionId;
-//             }
-//           }
-//         });
+    const approval = () => {
+      const logId = route.query?.logId as string;
+      if (logId) {
+        getMessageById(logId).then(({ success, result }) => {
+          if (success && result) {
+            if (result.type == 1) {
+              processApprovalState.open = true;
+              const data = convertMessage(result);
+              processApprovalState.processInstanceId = data?.extraParams?.processInstanceId;
+              processApprovalState.functionId = data?.extraParams?.functionId;
+            }
+          }
+        });
 
-//         updateMessageStatus({ logId, readStatus: 'Y' });
-//       }
-//     };
+        updateMessageStatus({ logId, readStatus: 'Y' });
+      }
+    };
 
-//     onMounted(() => {
-//       onActivated(() => {
-//         //防止加载时快速切换导致宽度获取异常
-//         gridLayoutRef.value?.onWindowResize?.();
-//       });
-//       approval();
-//     });
+    onMounted(() => {
+      onActivated(() => {
+        //防止加载时快速切换导致宽度获取异常
+        gridLayoutRef.value?.onWindowResize?.();
+      });
+      approval();
+    });
 
-//     return {
-//       state,
-//       changeConfig,
-//       saveConfig,
-//       getItemProps,
-//       gridLayoutRef,
-//       processApprovalState,
-//     };
-//   },
-//   components: {
-//     ChildItem,
-//     PageComponentsModal,
-//     AAffix,
-//     ProcessApprovalModal,
-//   },
-// });
+    return {
+      state,
+      changeConfig,
+      saveConfig,
+      getItemProps,
+      gridLayoutRef,
+      processApprovalState,
+    };
+  },
+  components: {
+    ChildItem,
+    PageComponentsModal,
+    AAffix,
+    ProcessApprovalModal,
+  },
+});
 </script>
 
 <style lang="less" scoped>

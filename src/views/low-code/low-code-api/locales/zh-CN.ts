@@ -1,0 +1,15 @@
+export default {
+  'view.system.low-code-api.form.code.label': '接口标识',
+  'view.system.low-code-api.form.code.placeholder': '请输入API标识',
+  'view.system.low-code-api.table.button.addApi': '新增API',
+  'view.system.low-code-api.table.code.title': '接口标识',
+  'view.system.low-code-api.table.parameterList.title': '参数列表',
+  'view.system.low-code-api.table.operation.title': '操作',
+  'view.system.low-code-api.modal.form.type.label': '类型',
+  'view.system.low-code-api.modal.form.code.label': '标识',
+  'view.system.low-code-api.modal.form.code.placeholder': '请输入API Code',
+  'view.system.low-code-api.modal.form.rule.lowCodeApiCode.message': '接口标识必须填写',
+  'view.system.low-code-api.modal.success.addAPI.message': '新增API成功',
+  'view.system.low-code-api.modal.success.editAPI.message': '修改API成功',
+  'view.system.low-code-api.modal.warning.fail.editAPI.message': '校验失败！',
+};
