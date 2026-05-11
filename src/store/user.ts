@@ -8,7 +8,7 @@ import { filterChildRoute, hasAuthority } from '@/utils/authority';
 import { filterMenu } from '@/utils/menu-util';
 import { default as router, routes, routes as devRoutes } from '@/router';
 import type { MenuDataItem } from '@/router/typing';
-import { generatorDynamicRouter } from '@/router/generator-routers';
+import { generatorDynamicRouter, generatorSubAppRouter } from '@/router/generator-routers';
 
 import { findRoleListByCurrentUser, findCurrentUserOrgInfo } from '@/api/system/role';
 import { findOrgByCurrentRole } from '@/api/system/org';
@@ -76,6 +76,7 @@ export const GENERATE_ROUTES_DYNAMIC = 'GENERATE_ROUTES_DYNAMIC';
 export const GENERATE_ROUTES_STATIC = 'GENERATE_ROUTES_STATIC';
 export const GET_PERSON_INFO = 'GET_PERSON_INFO';
 export const GET_USER_COMPANY_DEPT_INFO = 'GET_USER_COMPANY_DEPT_INFO';
+export const GENERATE_SUB_APP_ROUTES = 'GENERATE_SUB_APP_ROUTES';
 
 export const SET_TOKEN = 'SET_TOKEN';
 export const SET_REFRESH_TOKEN = 'SET_REFRESH_TOKEN';
@@ -93,6 +94,7 @@ export const SET_NEXT_LOGIN_UPDATE_PASSWORD = 'SET_NEXT_LOGIN_UPDATE_PASSWORD';
 export const SET_PERSON_INFO = 'SET_PERSON_INFO';
 export const SET_LOADING_DYNAMIC_ROUTES = 'SET_LOADING_DYNAMIC_ROUTES';
 export const SET_USER_COMPANY_DEPT_INFO = 'SET_USER_COMPANY_DEPT_INFO';
+export const SET_SUB_APP_USER_STATE = 'SET_SUB_APP_USER_STATE';
 
 export const initState = (): UserState => ({
   token: '',
@@ -246,6 +248,38 @@ export const useUserStore = defineStore('user', {
         m.deptTree = buildDeptTree(m.deptList || []);
         return m;
       });
+    },
+
+    [SET_SUB_APP_USER_STATE]() {
+      const baseData = window.microApp.getData();
+      const info = baseData?.currentUser as Partial<UserState>;
+      this.avatar = info.avatar;
+      this.currentOrgId = info.currentOrgId;
+      this.currentRoleId = info.currentRoleId;
+      this.extra = info.extra;
+      this.nickname = info.nickname;
+      this.orgList = info.orgList;
+      this.roleList = info.roleList;
+      this.userId = info.userId;
+      this.userName = info.userName;
+      this.token = info.token;
+      this.tokeType = info.tokeType;
+      this.refreshToken = info.refreshToken;
+
+      this.personInfo = info.personInfo;
+      this.currentCompanyId = info.currentCompanyId;
+      this.currentDeptId = info.currentDeptId;
+      this.companyDeptList = info.companyDeptList;
+    },
+    [GENERATE_SUB_APP_ROUTES]() {
+      const allowRoutes = generatorSubAppRouter();
+      allowRoutes.forEach(r => {
+        router.addRoute(r);
+      });
+      //确保至少有一个allowRoutes，否则会死循环
+      allowRoutes.push(...(devRoutes as any));
+      this.SET_ROUTERS(allowRoutes);
+      return allowRoutes;
     },
 
     async [LOGIN](info: LoginParams) {

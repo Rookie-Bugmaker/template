@@ -156,6 +156,13 @@ const convertRepeatedFunction = (routes: MenuDataItem[]) => {
   return routes;
 };
 
+//构建子应用路由
+export const generatorSubAppRouter = (): RouteRecordRaw[] => {
+  const baseData = window.microApp.getData();
+  const appFunctions = (baseData?.appFunctions || []) as FunctionItem[];
+  return convertFunctionToRoutes(appFunctions, null) as RouteRecordRaw[];
+};
+
 export const generatorDynamicRouter = () => {
   return new Promise<RouteRecordRaw>((resolve, reject) => {
     retry(findMenuTreeByCurrentUserSse, 5, 1500)
@@ -314,7 +321,6 @@ const convertFunctionToRoutes = (
             functionItem.blockList == null
               ? null
               : convertBlockAndColumnToRouteMetaPermission(functionItem.blockList),
-          logMenuId: menuId,
         },
       };
       routeItem.children =

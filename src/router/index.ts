@@ -5,6 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import type { MenuDataItem } from './typing';
 //不能使用异步方式（defineAsyncComponent）加载RouteView，会导致子页面keepAlive失效
 import RouteView from '@/layouts/route-view.vue';
+import DynamicView from '@/layouts/dynamic-view.vue';
 
 const Layout = defineAsyncComponent(
   () => import(/* webpackChunkName: "layout" */ '../layouts/index.vue'),
@@ -14,10 +15,6 @@ const LowCodeLayout = defineAsyncComponent(
 );
 const AsyncDashboard = defineAsyncComponent(
   () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/index.vue'),
-);
-
-const SubAppView = defineAsyncComponent(
-  () => import(/* webpackChunkName: "sub-app" */ '../layouts/sub-app-view.vue'),
 );
 
 export const routes: MenuDataItem[] = [
@@ -78,11 +75,18 @@ export const routes: MenuDataItem[] = [
 
 export const staticRoutes: MenuDataItem[] = [
   {
-    path: '/sub-app',
-    name: 'sub-app',
-    component: SubAppView,
-    children: [],
+    path: '/dynamic-view',
+    name: 'dynamicView',
+    meta: { title: 'dynamic-view', icon: 'TableOutlined' },
+    component: DynamicView,
   },
+  {
+    path: '/approval-view',
+    name: 'approval-view',
+    component: () => import('@/views/approval-view/index.vue'),
+    meta: { hidden: true },
+  },
+
   {
     path: '/low-code-application/:applicationId',
     name: 'lowCodeApplication',

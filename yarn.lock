@@ -1753,6 +1753,11 @@
   resolved "http://10.216.245.96:8081/repository/npm-group/@marijn/find-cluster-break/-/find-cluster-break-1.0.2.tgz#775374306116d51c0c500b8c4face0f9a04752d8"
   integrity sha512-l0h88YhZFyKdXIFNfSWpyjStDjGHwZ/U7iobcK1cQQD8sejsONdQtTVU+1wVN1PBw40PiiHB1vA5S7VTfQiP9g==
 
+"@micro-zoe/micro-app@1.0.0-rc.4":
+  version "1.0.0-rc.4"
+  resolved "http://10.216.244.106:8081/nexus/repository/npm-group/@micro-zoe/micro-app/-/micro-app-1.0.0-rc.4.tgz#a638c77d0f8518d8e2efd37edd07647d5496e802"
+  integrity sha512-8ZDCwV0w3m11xlECFCA9VJYInNIPqt6kfiH1+/ODoupPSSrKNPzUnmhqYRAKZQP1MrXa0w9O60DT2/mPFctwdw==
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "http://10.216.245.96:8081/repository/npm-group/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"

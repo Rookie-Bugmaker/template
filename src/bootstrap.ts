@@ -1,4 +1,12 @@
 import '../public-path';
+import microApp from '@micro-zoe/micro-app';
+microApp.start({
+  /* lifeCycles: {
+    unmount() {
+      console.log('unmount');
+    },
+  }, */
+});
 
 import 'ant-design-vue/dist/reset.css';
 // import '@surely-vue/table/dist/index.less';

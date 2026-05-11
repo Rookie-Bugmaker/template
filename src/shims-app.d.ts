@@ -21,3 +21,12 @@ declare namespace JSX {
     [elem: string]: any;
   }
 }
+
+
+declare interface Window {
+  __MICRO_APP_BASE_ROUTE__: string;
+  microApp: Record<string, any>;
+  rawWindow: Window;
+  unmount: () => void;
+}
+
