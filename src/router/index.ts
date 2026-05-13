@@ -19,6 +19,24 @@ const AsyncDashboard = defineAsyncComponent(
 
 export const routes: MenuDataItem[] = [
   {
+    name: 'exception403',
+    path: '/exception/403',
+    meta: { title: 'pages.exception.403.title' },
+    component: () => import(/* webpackChunkName: "exception" */ '@/views/exception/403.vue'),
+  },
+  {
+    name: 'exception404',
+    path: '/exception/404',
+    meta: { title: 'pages.exception.404.title' },
+    component: () => import(/* webpackChunkName: "exception" */ '@/views/exception/404.vue'),
+  },
+  {
+    name: 'exception500',
+    path: '/exception/500',
+    meta: { title: 'pages.exception.500.title' },
+    component: () => import(/* webpackChunkName: "exception" */ '@/views/exception/500.vue'),
+  },
+  {
     path: '/',
     name: 'index',
     redirect: '/dashboard',
@@ -39,36 +57,36 @@ export const routes: MenuDataItem[] = [
       },
 
       // exception
-      {
-        name: 'exception',
-        path: '/exception',
-        meta: { hideInMenu: true, title: 'pages.exception.title', icon: 'WarningOutlined' },
-        component: RouteView,
-        redirect: '/exception/403',
-        children: [
-          {
-            name: 'exception403',
-            path: '/exception/403',
-            meta: { title: 'pages.exception.403.title' },
-            component: () =>
-              import(/* webpackChunkName: "exception" */ '@/views/exception/403.vue'),
-          },
-          {
-            name: 'exception404',
-            path: '/exception/404',
-            meta: { title: 'pages.exception.404.title' },
-            component: () =>
-              import(/* webpackChunkName: "exception" */ '@/views/exception/404.vue'),
-          },
-          {
-            name: 'exception500',
-            path: '/exception/500',
-            meta: { title: 'pages.exception.500.title' },
-            component: () =>
-              import(/* webpackChunkName: "exception" */ '@/views/exception/500.vue'),
-          },
-        ],
-      },
+      // {
+      //   name: 'exception',
+      //   path: '/exception',
+      //   meta: { hideInMenu: true, title: 'pages.exception.title', icon: 'WarningOutlined' },
+      //   component: RouteView,
+      //   redirect: '/exception/403',
+      //   children: [
+      //     {
+      //       name: 'exception403',
+      //       path: '/exception/403',
+      //       meta: { title: 'pages.exception.403.title' },
+      //       component: () =>
+      //         import(/* webpackChunkName: "exception" */ '@/views/exception/403.vue'),
+      //     },
+      //     {
+      //       name: 'exception404',
+      //       path: '/exception/404',
+      //       meta: { title: 'pages.exception.404.title' },
+      //       component: () =>
+      //         import(/* webpackChunkName: "exception" */ '@/views/exception/404.vue'),
+      //     },
+      //     {
+      //       name: 'exception500',
+      //       path: '/exception/500',
+      //       meta: { title: 'pages.exception.500.title' },
+      //       component: () =>
+      //         import(/* webpackChunkName: "exception" */ '@/views/exception/500.vue'),
+      //     },
+      //   ],
+      // },
     ],
   },
 ];
@@ -123,7 +141,7 @@ export const staticRoutes: MenuDataItem[] = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.VUE_APP_PUBLIC_PATH),
+  history: createWebHistory(window.__MICRO_APP_BASE_ROUTE__ || process.env.VUE_APP_PUBLIC_PATH),
   routes: staticRoutes as RouteRecordRaw[],
   scrollBehavior: (to, from) => {
     if (to.path !== from.path) {
