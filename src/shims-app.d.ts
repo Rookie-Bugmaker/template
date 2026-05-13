@@ -22,11 +22,10 @@ declare namespace JSX {
   }
 }
 
-
 declare interface Window {
   __MICRO_APP_BASE_ROUTE__: string;
+  __MICRO_APP_ENVIRONMENT__: boolean;
   microApp: Record<string, any>;
   rawWindow: Window;
   unmount: () => void;
 }
-
