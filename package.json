@@ -21,6 +21,7 @@
     "publish:production": "node ./scripts/publish/index.js production"
   },
   "dependencies": {
+    "@crrc/crrc-web-packages": "link:../crrc-web-packages",
     "@ant-design/icons-vue": "^7.0.0",
     "@antv/x6": "^2.9.7",
     "@antv/x6-plugin-dnd": "^2.0.4",

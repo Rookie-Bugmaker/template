@@ -1250,6 +1250,10 @@
     style-mod "^4.1.0"
     w3c-keyname "^2.2.4"
 
+"@crrc/crrc-web-packages@link:../crrc-web-packages":
+  version "0.0.0"
+  uid ""
+
 "@csstools/selector-specificity@^2.0.2":
   version "2.2.0"
   resolved "http://10.216.245.96:8081/repository/npm-group/@csstools/selector-specificity/-/selector-specificity-2.2.0.tgz#2cbcf822bf3764c9658c4d2e568bd0c0cb748016"
