@@ -1,0 +1,192 @@
+/**
+ * CRRC UI 主题系统
+ *
+ * 基于 CSS Custom Properties 实现双主题切换：
+ * - 红色主题（CRRC 品牌红，默认）：data-theme="red"
+ * - 蓝色主题（备选蓝）：data-theme="blue"
+ *
+ * 使用方式：
+ *   import '@/components/ckui/theme/index.less'
+ *   // 切换主题：document.documentElement.setAttribute('data-theme', 'blue')
+ */
+
+/* ============================================================
+ *  中性色令牌（双主题共享，不随主题变化）
+ * ============================================================ */
+:root {
+  /* ---- 背景色 ---- */
+  --ck-bg-primary: #f9fafb;    /* 页面主背景 */
+  --ck-bg-card: #ffffff;        /* 卡片 / 内容区背景 */
+
+  /* ---- 文字色 ---- */
+  --ck-text-primary: #111827;   /* 主文字：标题、正文 */
+  --ck-text-secondary: #6b7280; /* 次级文字：说明、表头 */
+  --ck-text-tertiary: #9ca3af;  /* 辅助文字：占位符、禁用 */
+
+  /* ---- 边框 ---- */
+  --ck-border-default: #e5e7eb; /* 常规边框 */
+  --ck-border-strong: #d1d5db;  /* 强调边框（聚焦 / 选中） */
+
+  /* ---- 功能色（双主题共享） ---- */
+  --ck-success: #10b981;
+  --ck-error: #ef4444;
+  --ck-warning: #f97316;
+  --ck-accent: #f59e0b;         /* 强调色（琥珀橙） */
+
+  /* ---- 禁用态 ---- */
+  --ck-disabled: #d1d5db;
+
+  /* ---- 遮罩 ---- */
+  --ck-overlay: rgba(0, 0, 0, 0.45);
+
+  /* ---- 圆角 ---- */
+  --ck-radius-none: 0px;
+  --ck-radius-sm: 4px;
+  --ck-radius-md: 8px;
+  --ck-radius-lg: 12px;
+  --ck-radius-xl: 16px;
+  --ck-radius-full: 999px;
+
+  /* ---- 阴影 ---- */
+  --ck-shadow-card: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --ck-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --ck-shadow-modal: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --ck-shadow-sticky: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+  /* ---- 间距（4px 基础网格） ---- */
+  --ck-space-1: 4px;
+  --ck-space-2: 8px;
+  --ck-space-3: 12px;
+  --ck-space-4: 16px;
+  --ck-space-5: 20px;
+  --ck-space-6: 24px;
+  --ck-space-7: 32px;
+  --ck-space-8: 48px;
+  --ck-space-9: 64px;
+
+  /* ---- 字体栈 ---- */
+  --ck-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans SC', sans-serif;
+}
+
+/* ============================================================
+ *  蓝色主题（data-theme="blue"）
+ * ============================================================ */
+:root,
+[data-theme='blue'] {
+  --ck-primary: #3b82f6;
+  --ck-primary-dark: #1d4ed8;
+  --ck-primary-light: #93c5fd;
+  --ck-primary-bg: rgba(59, 130, 246, 0.05);
+  --ck-primary-hover: #2563eb;
+  --ck-info: #3b82f6;
+
+  /* 聚焦光环 */
+  --ck-focus-ring: rgba(59, 130, 246, 0.2);
+}
+
+/* ============================================================
+ *  红色主题（data-theme="red"，CRRC 品牌色，默认）
+ * ============================================================ */
+[data-theme='red'] {
+  --ck-primary: #c8102e;
+  --ck-primary-dark: #8b1a1a;
+  --ck-primary-light: #e57373;
+  --ck-primary-bg: rgba(200, 16, 46, 0.05);
+  --ck-primary-hover: #a32638;
+  --ck-info: #c8102e;
+
+  /* 聚焦光环 */
+  --ck-focus-ring: rgba(200, 16, 46, 0.2);
+}
+
+/* ============================================================
+ *  全局基础样式（重置 ant-design-vue 默认色值）
+ * ============================================================ */
+
+/* 覆盖 ant-design-vue 的主色 token，使整套配色跟随 CRRC 主题 */
+body {
+  font-family: var(--ck-font-family);
+  background-color: var(--ck-bg-primary);
+  color: var(--ck-text-primary);
+}
+
+/* 统一覆盖 ant-design-vue CSS 变量（v4 使用 ConfigProvider token，此处兜底覆盖） */
+.ant-btn-primary {
+  background-color: var(--ck-primary) !important;
+  border-color: var(--ck-primary) !important;
+}
+.ant-btn-primary:hover {
+  background-color: var(--ck-primary-hover) !important;
+  border-color: var(--ck-primary-hover) !important;
+}
+
+/* 链接色 */
+a,
+.ant-btn-link {
+  color: var(--ck-primary);
+}
+a:hover,
+.ant-btn-link:hover {
+  color: var(--ck-primary-hover);
+}
+
+/* Checkbox / Radio 选中色 */
+.ant-checkbox-checked .ant-checkbox-inner,
+.ant-radio-checked .ant-radio-inner {
+  border-color: var(--ck-primary) !important;
+  background-color: var(--ck-primary) !important;
+}
+
+/* Switch 选中色 */
+.ant-switch-checked {
+  background-color: var(--ck-primary) !important;
+}
+
+/* Tabs 选中色 */
+.ant-tabs-tab-active .ant-tabs-tab-btn,
+.ant-tabs-tab:hover .ant-tabs-tab-btn {
+  color: var(--ck-primary) !important;
+}
+.ant-tabs-ink-bar {
+  background-color: var(--ck-primary) !important;
+}
+
+/* Pagination 选中色 */
+.ant-pagination-item-active {
+  background-color: var(--ck-primary) !important;
+  border-color: var(--ck-primary) !important;
+
+  a {
+    color: #fff !important;
+  }
+
+  &:hover a {
+    color: #fff !important;
+  }
+}
+
+/* Steps 进行中色 */
+.ant-steps-item-process .ant-steps-item-icon {
+  background-color: var(--ck-primary) !important;
+  border-color: var(--ck-primary) !important;
+}
+
+/* Tag 主色标签 */
+.ant-tag-primary {
+  background-color: var(--ck-primary) !important;
+  border-color: var(--ck-primary) !important;
+}
+
+/* Table 行悬停 */
+.ant-table-tbody > tr:hover > td {
+  background-color: var(--ck-primary-bg) !important;
+}
+
+/* Input 聚焦 */
+.ant-input:focus,
+.ant-input-focused,
+.ant-select-focused .ant-select-selector {
+  border-color: var(--ck-primary) !important;
+  box-shadow: 0 0 0 3px var(--ck-focus-ring) !important;
+}
