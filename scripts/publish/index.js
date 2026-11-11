@@ -12,13 +12,18 @@ const build = async () => {
   //临时存储仓库目录
   const tempDirName = 'temp';
   //commit message
-  let gitLog = 'auto push at ' + new Date().toLocaleString();
+  let gitLog = '部署：更新PLSM前端产物 ' + new Date().toLocaleString();
 
   //部署环境
   const publishEnv = process.argv.length > 2 ? process.argv[2] : 'test';
 
   //部署仓库地址
-  const gitPath = `http://172.22.212.45/workplace-new/web/build-${publishEnv}/workplace-web-base.git`;
+  // PLSM首次部署尚无已确认的产物仓库，必须显式指定，避免覆盖模板原来的主应用仓库。
+  const gitPath = process.env.PLSM_DEPLOY_REPOSITORY;
+  if (!gitPath) {
+    log.error('请先设置PLSM_DEPLOY_REPOSITORY为PLSM专用产物仓库，再执行发布');
+    return;
+  }
 
   try {
     // await cd('../..');
@@ -27,7 +32,7 @@ const build = async () => {
     const endTime = new Date().getTime();
 
     const buildTime = ((endTime - startTime) / 1000).toFixed();
-    gitLog += ` build-time: ${buildTime}s `;
+    gitLog += `，构建耗时：${buildTime}秒`;
 
     log.success('打包成功');
   } catch (error) {
@@ -60,9 +65,8 @@ const build = async () => {
     // await exec(`git status`);
     await exec(`git add .`);
     await exec(`git commit -m "${gitLog}"`);
+    // 沿用PLSM专用产物仓库克隆后的默认跟踪分支，不再额外切换或推送模板master分支。
     await exec(`git push`);
-    await exec(`git pull origin master`);
-    await exec(`git push -u origin master`);
     log.success('推送文件到部署环境成功');
   } catch (error) {
     log.error('推送文件到部署环境失败');

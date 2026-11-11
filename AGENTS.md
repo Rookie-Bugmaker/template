@@ -23,9 +23,11 @@
 - 以 `package.json` 实际脚本为准：`yarn dev`（Vue CLI）、`yarn vite:dev`（Vite 开发）、`yarn build:test`、`yarn build:production`。README 中的 `serve/build` 不是当前脚本名。
 - Vue CLI 是现有打包路径；Vite 开发可用不代表生产构建通过，不自行改成 Vite 打包。
 - 环境沿用 `.env*`；Vue CLI 使用 `VUE_APP_*`，Vite 配置将 `VITE_APP_*` 映射到兼容变量，修改代理、项目代码、公共路径时核对两套配置及部署目录。
+- PLSM微前端入口固定为 `/sub/plsm/`，两套PUBLIC_PATH与Docker静态目录、Nginx回退路径同步；项目名称/项目头使用 `plsm`，平台微前端标记为Y。功能路径仅填 `/plsmVehicleQuery`、`/plsmSerialPart`，不重复拼接入口前缀；主应用注入的路由基座沿用模板处理。项目入口、接口网关前缀是独立配置，不能混用。
 - 代码变更按影响执行 `yarn lint:check`、`yarn tsc` 和相关构建；检查用不自动修复命令，不用 `yarn prettier` 对全库重写。
 - 分别报告静态检查、构建、页面操作和内网联调结果；既有模板错误与本次新增错误分开说明。缺少私有组件、网关、认证或菜单配置时明确阻断，不把 mock 当作真实联调。
 - `publish:*` 脚本属于部署操作，不能作为本地验证命令自动执行。
+- 自动发布必须显式设置 `PLSM_DEPLOY_REPOSITORY` 为PLSM专用产物仓库；不沿用模板的workplace-web-base仓库，也不将本地代码提交等同于内网部署完成。
 
 ## 接口与数据契约
 
@@ -33,7 +35,7 @@
 - 默认请求实例返回 HTTP body，并未自动提取业务结果。PLSM 的 `ResponseResult` 与模板 `ResponseBody` 可能存在 `msg/message`、数据字段差异，先核对实际序列化契约，在 PLSM API 层适配，不猜测或为单个模块全局改拦截器。
 - 默认 POST/PUT 会转换为表单；调用后端 `@RequestBody` JSON 接口必须显式使用 `CONTENT_TYPE_APPLICATION_JSON`。上传使用 FormData，下载按实际响应使用 blob 或 `requestNative`。
 - PLSM 列表分页接口使用 `pageNo/pageSize` 查询参数和 JSON 查询对象，返回 MyBatis-Plus 分页结构；核对 `records/total/current/size` 与模板 `rows/page` 的映射，不直接套模板分页类型。
-- PLSM 网关服务前缀统一通过 `VUE_APP_PLSM_SERVICE_PREFIX` 配置，Vite对应 `VITE_APP_PLSM_SERVICE_PREFIX`；按实际网关路由填写，不凭仓库名新增固定Service枚举或硬编码内网地址。缺配置时明确提示，不回退猜测路径。
+- PLSM 网关服务前缀统一通过 `VUE_APP_PLSM_SERVICE_PREFIX` 配置，Vite对应 `VITE_APP_PLSM_SERVICE_PREFIX`；用户已确认值为 `/workplace-plsm`，两套默认值已写入 `.env`。与同源 `/api` 和后端 `/plsm/...` 拼成 `/api/workplace-plsm/plsm/...`；不得与前端入口 `/sub/plsm/` 混用，不凭仓库名新增固定Service枚举或硬编码内网地址。缺配置时明确提示，不回退猜测路径。
 - 数据库 ID 与业务编码分开；长 ID、物料号、序列号、位置及两位车辆序号保留字符串语义和前导零，避免 JavaScript 数值精度损失。
 - 区分未传、null、空字符串，按具体接口决定保留或清空；不可批量把空表单字段统一转 null。错误须保留后端真实原因，避免失败仍提示成功或重复弹窗。
 

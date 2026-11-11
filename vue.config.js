@@ -31,6 +31,8 @@ module.exports = {
   publicPath: process.env.VUE_APP_PUBLIC_PATH,
   // publicPath: `http://localhost:${port}/`,
   configureWebpack: {
+    // 微前端可能同时挂载多个同模板子应用，为异步分包运行时设置独立名称，避免互相覆盖。
+    output: { uniqueName: 'plsm' },
     plugins: [
       UnoCSS(),
       /* new ModuleFederationPlugin({
@@ -95,7 +97,8 @@ module.exports = {
       }),*/
     ],
     optimization: {
-      realContentHash: true,
+      // 保持Vue CLI默认值，避免双版本构建记录兼容包标签后再次改写哈希，导致入口脚本404。
+      realContentHash: false,
       // splitChunks: false,
     },
   },
