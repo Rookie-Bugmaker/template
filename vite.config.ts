@@ -22,6 +22,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       'process.env.VUE_APP_PORT': JSON.stringify(env.VITE_APP_PORT),
       'process.env.VUE_APP_FILE_VIEW_URL': JSON.stringify(env.VITE_APP_FILE_VIEW_URL),
       'process.env.VUE_APP_PROJECT_CODE': JSON.stringify(env.VITE_APP_PROJECT_CODE),
+      'process.env.VUE_APP_PLSM_SERVICE_PREFIX': JSON.stringify(env.VITE_APP_PLSM_SERVICE_PREFIX),
     },
     plugins: [
       legacy({
