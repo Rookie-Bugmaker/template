@@ -105,19 +105,11 @@ const fields: {
   label: string;
   placeholder?: string;
 }[] = [
-  { key: 'projectCode', label: '项目号' },
-  { key: 'productionCode', label: '产品编号' },
+  { key: 'projectCode', label: '项目编码' },
   { key: 'configurationType', label: '编组形式' },
   { key: 'model', label: '车型（必填）' },
   { key: 'trainCode', label: '车组编号（必填）' },
-  { key: 'vehicleNo', label: '车辆号' },
-  { key: 'location', label: '位置号' },
-  { key: 'serialNumber', label: '序列号' },
-  { key: 'matnr', label: '物料号' },
   { key: 'wbscode', label: 'WBS（新造）' },
-  { key: 'producerCode', label: '制造商编码' },
-  { key: 'producerName', label: '制造商描述' },
-  { key: 'supplierCode', label: '检修商编码' },
   { key: 'plant', label: '主数据工厂', placeholder: '默认2000，可修改' },
 ];
 const columns = [
