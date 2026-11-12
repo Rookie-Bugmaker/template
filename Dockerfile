@@ -5,11 +5,10 @@ MAINTAINER 李江涛
 # 拷贝文件夹
 # 与构建publicPath和平台入口/sub/plsm/一致；不能把子应用资源复制到主应用根目录。
 COPY dist/ /usr/share/nginx/html/sub/plsm/
-# 拷贝配置文件
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY deploy/nginx.conf /etc/nginx/conf.d/default.conf
+# 使用完整配置，镜像内只加载PLSM的29876监听，不引用基础镜像的默认server配置。
+COPY deploy/nginx.release.conf /etc/nginx/nginx.conf
 
-EXPOSE 80
+EXPOSE 29876
 
 # 启动 Nginx
 CMD ["nginx", "-g", "daemon off;"]

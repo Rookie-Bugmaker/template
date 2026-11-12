@@ -13,6 +13,7 @@ import type { BlockItem } from '@/api/system/function/block-column';
 
 import { duffDevice, retry } from '@/utils/util';
 import { uuid } from '@/utils/unique-key-util';
+import { resolveViewComponent } from './view-components';
 
 // 根级菜单
 const rootRouter: MenuDataItem = {
@@ -64,7 +65,7 @@ export const generator = (
         component:
           item.component && defineRouteComponentKeys.includes(item.component)
             ? defineRouteComponents[item.component]
-            : () => import(/* @vite-ignore */ `../views/${item.component}.vue`),
+            : resolveViewComponent(item.component),
       };
 
       // 为了防止出现后端返回结果不规范，处理有可能出现拼接出两个 反斜杠
@@ -297,7 +298,7 @@ const convertFunctionToRoutes = (
         if (isExternalLink && isInnerOpen) {
           return defineRouteComponents['ExternalLinkView'];
         } else {
-          return () => import(/* @vite-ignore */ `../views/${functionItem.component}.vue`);
+          return resolveViewComponent(functionItem.component);
         }
       };
       const c = getComponent();
