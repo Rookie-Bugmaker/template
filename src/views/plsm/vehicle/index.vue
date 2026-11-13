@@ -39,7 +39,7 @@
         :columns="columns"
         row-key="id"
         :loading="loading"
-        :scroll="{ x: 2700 }"
+        :scroll="{ x: 3800 }"
         :pagination="{
           current: page,
           pageSize: size,
@@ -54,7 +54,7 @@
             <a-button
               type="link"
               size="small"
-              :disabled="!record.matnr || !record.serial_number"
+              :disabled="!record.serial_number"
               @click="historyDialog?.show(record)"
             >
               查看历史
@@ -62,13 +62,13 @@
           </template>
           <template v-else-if="column.key === 'state'">
             <a-space direction="vertical" :size="2">
-              <a-tag :color="record.h_status === '0' ? 'orange' : 'default'">
+              <a-tag :color="effectiveColor(record.h_status)">
                 规划：{{ effective(record.h_status) }}
               </a-tag>
-              <a-tag :color="record.d_status === '0' ? 'orange' : 'default'">
+              <a-tag :color="effectiveColor(record.d_status)">
                 位置：{{ effective(record.d_status) }}
               </a-tag>
-              <a-tag :color="record.v_status === '2' ? 'red' : 'blue'">
+              <a-tag :color="vehicleColor(record.v_status)">
                 实车：{{ vehicleState(record.v_status) }}
               </a-tag>
             </a-space>
@@ -95,6 +95,7 @@ import type { TablePaginationConfig } from 'ant-design-vue';
 import { errorText, exportVehicles, queryPage } from '@/api/plsm';
 import type { PlsmQuery, PlsmRow } from '@/api/plsm';
 import HistoryDialog from '../components/HistoryDialog.vue';
+import { effectiveColor, vehicleColor } from '../status';
 
 defineOptions({ components: { HistoryDialog } });
 
@@ -109,10 +110,24 @@ const fields: {
   { key: 'configurationType', label: '编组形式' },
   { key: 'model', label: '车型（必填）' },
   { key: 'trainCode', label: '车组编号（必填）' },
+  { key: 'vehicleNo', label: '车辆号' },
+  { key: 'hmatnr', label: '主物料号' },
   { key: 'wbscode', label: 'WBS（新造）' },
   { key: 'plant', label: '主数据工厂', placeholder: '默认2000，可修改' },
 ];
+// 三个识别字段放在最左侧并固定，横向滚动时仍能核对当前实车对应的序列号和物料。
 const columns = [
+  ...[
+    ['serial_number', '序列号'],
+    ['matnr', '物料号'],
+    ['material_name', '物料名称'],
+  ].map(([dataIndex, title]) => ({
+    dataIndex,
+    title,
+    key: dataIndex,
+    width: 180,
+    fixed: 'left' as const,
+  })),
   ...[
     ['project_code', '项目号'],
     ['production_code', '产品编号'],
@@ -123,9 +138,6 @@ const columns = [
     ['car_sort', '车辆序号'],
     ['location', '位置号'],
     ['location_desc', '位置描述'],
-    ['matnr', '物料号'],
-    ['material_name', '物料名称'],
-    ['serial_number', '序列号'],
     ['wbscode', 'WBS编码'],
     ['supplier_code', '检修商编码'],
     ['h_matnr', '主件物料'],

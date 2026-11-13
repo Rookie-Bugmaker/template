@@ -20,6 +20,8 @@ export interface PlsmQuery {
   model?: string;
   trainCode?: string;
   vehicleNo?: string;
+  /** 规划主物料号，对应 h_matnr；可选，保留前导零并精确匹配。 */
+  hmatnr?: string;
   location?: string;
   wbscode?: string;
   producerCode?: string;
@@ -94,15 +96,11 @@ export async function queryPage(
   );
 }
 
-export async function history(
-  serialNumber: string,
-  matnr: string,
-  pageNo: number,
-  pageSize: number,
-) {
+/** 四表历史仅按序列号查询，包含不同物料及物料号暂缺的来源记录。 */
+export async function history(serialNumber: string, pageNo: number, pageSize: number) {
   return unwrap(
     await request.get<unknown, Envelope<PlsmPage>>(endpoint('/history'), {
-      params: { serialNumber, matnr, pageNo, pageSize },
+      params: { serialNumber, pageNo, pageSize },
     }),
   );
 }

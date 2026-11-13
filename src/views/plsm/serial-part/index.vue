@@ -41,14 +41,14 @@
         @change="changePage"
       >
         <template #bodyCell="{ column, record, text }">
-          <a-tag v-if="column.key === 'status'" :color="text === '1' ? 'green' : 'default'">
-            {{ text === '1' ? '生效' : '失效' }}
+          <a-tag v-if="column.key === 'status'" :color="effectiveColor(text)">
+            {{ text === '1' ? '生效' : text === '0' ? '失效' : text || '未提供' }}
           </a-tag>
           <a-space v-else-if="column.key === 'action'">
             <a-button
               type="link"
               size="small"
-              :disabled="!record.serial_number || !record.matnr"
+              :disabled="!record.serial_number"
               @click="historyDialog?.show(record)"
             >
               历史
@@ -131,6 +131,7 @@ import type { TablePaginationConfig } from 'ant-design-vue';
 import { queryPage, saveArchive, permissions, errorText } from '@/api/plsm';
 import type { ArchiveCommand, PlsmQuery, PlsmRow } from '@/api/plsm';
 import HistoryDialog from '../components/HistoryDialog.vue';
+import { effectiveColor } from '../status';
 
 defineOptions({ components: { HistoryDialog } });
 

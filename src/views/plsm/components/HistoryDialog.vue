@@ -1,7 +1,11 @@
 <template>
   <a-modal v-model:open="open" title="序列号历史凭证" :width="980" :footer="null">
     <a-typography-paragraph type="secondary">
-      序列号：{{ serial }} / 物料号：{{ material }}。创建日期为来源凭证创建时间，缺失时留空。
+      序列号：{{ serial }}。展示该序列号的全部物料历史，物料号暂缺的记录也保留。
+      创建日期为来源凭证创建时间，缺失时留空。
+    </a-typography-paragraph>
+    <a-typography-paragraph type="secondary">
+      当前选中物料：{{ selected?.matnr || '未提供' }}；以下制造信息仅对应当前选中记录。
     </a-typography-paragraph>
     <a-descriptions :column="3" size="small" class="archive-summary">
       <a-descriptions-item label="制造商编码">
@@ -21,7 +25,7 @@
       row-key="id"
       :loading="loading"
       :pagination="{ current: page, pageSize: size, total, showSizeChanger: true }"
-      :scroll="{ x: 850 }"
+      :scroll="{ x: 1060 }"
       @change="changePage"
     />
   </a-modal>
@@ -35,7 +39,6 @@ import type { TablePaginationConfig } from 'ant-design-vue';
 
 const open = ref(false);
 const serial = ref('');
-const material = ref('');
 const rows = ref<PlsmRow[]>([]);
 const page = ref(1);
 const size = ref(20);
@@ -45,6 +48,7 @@ const error = ref('');
 const selected = ref<PlsmRow>();
 let sequence = 0;
 const columns = [
+  { title: '物料号', dataIndex: 'matnr', width: 180 },
   { title: '凭证编码', dataIndex: 'serial_detail_code', width: 220 },
   { title: '订单编码', dataIndex: 'order_code', width: 200 },
   { title: '订单类型（原值）', dataIndex: 'order_type', width: 160 },
@@ -52,14 +56,14 @@ const columns = [
   { title: '状态（原值）', dataIndex: 'status', width: 100 },
 ];
 
-/** 快速切换记录时只接受最后一次请求，防止上一物料历史覆盖当前弹窗。 */
+/** 快速切换记录时只接受最后一次请求，防止上一序列号历史覆盖当前弹窗。 */
 async function load() {
   const current = ++sequence;
   loading.value = true;
   error.value = '';
   rows.value = [];
   try {
-    const result = await history(serial.value, material.value, page.value, size.value);
+    const result = await history(serial.value, page.value, size.value);
     if (current === sequence) {
       rows.value = result.records;
       total.value = result.total;
@@ -76,12 +80,11 @@ async function load() {
 }
 
 function show(row: PlsmRow) {
-  if (!row.serial_number || !row.matnr) {
+  if (!row.serial_number) {
     return;
   }
   serial.value = row.serial_number;
   selected.value = { ...row };
-  material.value = row.matnr;
   page.value = 1;
   total.value = 0;
   open.value = true;
